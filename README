@@ -66,5 +66,4 @@
 	http://genome.sph.umich.edu/wiki/ContaminationDetection
 
 	* VerifyBamID software can estimate sample contamination from aligned sequence reads and population minor allele frequency:
-	http://genome.sph.umich.edu/wiki/VerifyIDintensity
-
+	http://genome.sph.umich.edu/wiki/VerifyBamID
