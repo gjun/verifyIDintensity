@@ -1,0 +1,70 @@
+
+
+0. Overview
+
+	* verifyIDintensity is a software that detects and estimates sample contamination using intensity data from Illumina genotyping arrays using a mixture model. 
+	* There is a wiki page for the software: 
+	http://genome.sph.umich.edu/wiki/VerifyBamID
+
+
+
+1. Build
+
+	* To build verifyIDintensity, run the following series of commands. You need boost library (http://www.boost.org/) and TCLAP (http://tclap.sourceforge.net).
+	* Once edit Makefile to have  correct path for libraries and headers, simply run 'make' from command line.
+
+2. Basic Usage 
+
+	verifyIDintensity  [-t <float>] [-m <int>] -n <int> [-b <string>] [-s <string>] -i <string> [-v] [-p] [--] [--version] [-h]
+
+
+3. Options
+
+-t <float>,  --threshold <float>
+	Minimum allele frequency for likelihood estimation, default is 0.01
+
+-m <int>,  --marker <int>
+	(required) Number of markers
+
+-n <int>,  --number <int>
+	(required) Number of samples
+
+-b <string>,  --abf <string>
+	Allele frequency file (ABF), which is a plain text file with SNP_ID and Allele_B frequency. 
+	SNP_IDs should be sorted in the same order as the intensity file
+
+-s <string>,  --stat <string>
+	Statistics file (created if not exist)
+
+-i <string>,  --in <string>
+	(required)  Input pre-computed intensity (.adpc.bin) file
+
+-v,  --verbose
+	Turn on verbose mode
+
+-p,  --persample
+	Do per-sample analysis, default is per-marker analysis
+
+--,  --ignore_rest
+	Ignores the rest of the labeled arguments following this flag.
+
+--version
+	Displays version information and exits.
+
+-h,  --help
+	Displays usage information and exits.
+
+
+4. Reference
+
+	* Please cite the following paper:
+	G. Jun, M. Flickinger, K. N. Hetrick, Kurt, J. M. Romm, K. F. Doheny, G. Abecasis, M. Boehnke,and H. M. Kang, ''Detecting and Estimating Contamination of Human DNA Samples in Sequencing and Array-Based Genotype Data'', American journal of human genetics doi:10.1016/j.ajhg.2012.09.004 (volume 91 issue 5 pp.839 - 848) 
+
+
+5. For more information:
+	* General information about contamination detection:
+	http://genome.sph.umich.edu/wiki/ContaminationDetection
+
+	* VerifyBamID software can estimate sample contamination from aligned sequence reads and population minor allele frequency:
+	http://genome.sph.umich.edu/wiki/VerifyIDintensity
+
