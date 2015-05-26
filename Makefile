@@ -61,7 +61,7 @@ all : $(TARGET) $(NEWLIBRARY)
 
 # dependencies for executables
 $(TARGET) : $(LIBRARY) $(TOOLOBJ) $(BINDIR)
-	$(CXX) $(CFLAGS) -o $@ $(TOOLOBJ) $(LIBRARY) -lm -lz -lssl
+	$(CXX) $(CFLAGS) -o $@ $(TOOLOBJ) $(LIBRARY) -lm -lz
 
 $(TOOLOBJ): $(TOOLHDR) $(LIBHDR)
 
