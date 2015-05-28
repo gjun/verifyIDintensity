@@ -66,13 +66,15 @@ double cStat::GetMinPr(unsigned int j)
 
 double cStat::minimizeLLK(unsigned int i, double& alpha, double& LLK0)
 {
-	curSample = i;
 	double LLK;
 	double minLLK, minalpha = 0.0;
 	double left, right;
 
+	curSample = i;
+
 	LLK0 = GetLLK(0);
 	minLLK = LLK0;
+
 
 	for(alpha=0.02;alpha<=0.5;alpha+=0.02)
 	{

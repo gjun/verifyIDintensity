@@ -24,7 +24,6 @@
 class cSampleStat : public cStat
 {
 	double *meanA, *meanB, *covs;
-	unsigned int *nums;
 
 	public:
 	void Initialize(unsigned int, unsigned int, const char*);
@@ -47,7 +46,6 @@ void cSampleStat::Initialize(unsigned int n_s, unsigned int n_m, const char* sIn
 	bZeroOut = new bool[n_marker];
 	CallRate = new double[n_sample];
 
-	nums = new unsigned [4*n_sample];
 	meanA = new double [4*n_sample];
 	meanB = new double [4*n_sample];
 	covs = new double [4*4*n_sample];
@@ -66,7 +64,6 @@ cSampleStat::~cSampleStat()
 	delete[] bZeroOut;
 	delete[] CallRate;
 
-	delete[] nums;
 	delete[] meanA;
 	delete[] meanB;
 	delete[] covs;
@@ -93,6 +90,7 @@ void cSampleStat::Estimate()
 	unsigned short gType;
 
 	double sumA[4] = {0.0}, sumB[4]= {0.0}, sumAA[4]={0.0}, sumAB[4]={0.0}, sumBB[4]={0.0};
+	double nums[4] = {0.0};
 	unsigned int* num_markers = new unsigned [4*n_marker];
 
 	for (unsigned i=0; i<n_sample; i++)
@@ -110,7 +108,6 @@ void cSampleStat::Estimate()
 				bZeroOut[j] = (bZeroOut[j] || false);
 			}
 		}
-//		std::cerr << "reading sample " << i << std::endl;
 	}
 
 	unsigned int n_zeroout = 0;
@@ -121,7 +118,6 @@ void cSampleStat::Estimate()
 			n_zeroout++;
 		}
 	}
-//	std::cerr << "n_zeroout: " << n_zeroout << std::endl;
 
 	unsigned int n_nonzero = n_marker - n_zeroout;
 
@@ -182,6 +178,7 @@ void cSampleStat::Estimate()
 				std::cerr << "Error: Mean is NAN though previously checked \n";
 				exit (1);
 			}
+
 			sumA[k]=0;
 			sumB[k]=0;
 			nums[k]=0;
@@ -189,7 +186,6 @@ void cSampleStat::Estimate()
 			sumAB[k]=0;
 			sumBB[k]=0;
 		}
-//		std::cerr << "Sample " << i  << " stat is estimated" << std::endl;
 	} // for i < n_sample
 
 	for(unsigned int j=0;j<n_marker;j++)
@@ -311,7 +307,6 @@ bool cSampleStat::ReadStat(const char *FileName)
 	InStatsFile.read(reinterpret_cast <char *> (meanB), sizeof(double)*4*n_sample);
 	InStatsFile.read(reinterpret_cast <char *> (covs), sizeof(double)*4*4*n_sample);
 	InStatsFile.read(reinterpret_cast <char *> (Pr), sizeof(double)*4*n_marker);
-	InStatsFile.read(reinterpret_cast <char *> (nums), sizeof(unsigned)*4*n_sample);
 	InStatsFile.read(reinterpret_cast <char *> (bZeroOut), sizeof(bool)*n_marker);
 	InStatsFile.read(reinterpret_cast <char *> (CallRate), sizeof(double)*n_sample);
 
@@ -334,7 +329,6 @@ void cSampleStat::WriteStat(const char *FileName)
 	OutStatsFile.write(reinterpret_cast <char *> (meanB), sizeof(double)*n_sample*4);
 	OutStatsFile.write(reinterpret_cast <char *> (covs), sizeof(double)*n_sample*4*4);
 	OutStatsFile.write(reinterpret_cast <char *> (Pr), sizeof(double)*4*n_marker);
-	OutStatsFile.write(reinterpret_cast <char *> (nums), sizeof(unsigned)*4*n_sample);
 	OutStatsFile.write(reinterpret_cast <char *> (bZeroOut), sizeof(bool)*n_marker);
 	OutStatsFile.write(reinterpret_cast <char *> (CallRate), sizeof(double)*n_sample);
 

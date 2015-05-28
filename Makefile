@@ -93,3 +93,4 @@ depend:
 
 # DO NOT DELETE THIS LINE -- make depend depends on it
 
+verifyIDintensity.o: common.h MarkerStat.h Stat.h Intensity.h SampleStat.h

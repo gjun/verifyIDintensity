@@ -70,12 +70,15 @@ void cIntensity::ReadData(unsigned int arg_i, unsigned int arg_j, float& arg_nA,
 
 	// Read all intensity data of i-th sample at a time, for minimized disk I/O
 
+//	std::cerr << "arg_i : " << arg_i << ", pos_sample : " << pos_sample << std::endl;
+
 	if (arg_i != pos_sample)
 	{
 #ifdef DEBUG
 		std::cerr << "Reading intensity data of "<< arg_i << "-th sample from input file\n";
 #endif
 		std::streampos seek_pos = 16+(unsigned long)arg_i*(unsigned long)n_marker*18;
+		inFile.clear();
 		inFile.seekg(seek_pos, std::ios::beg);
 
 		for (unsigned int j=0;j<n_marker;j++)
